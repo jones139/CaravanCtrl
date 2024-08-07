@@ -1,0 +1,54 @@
+# Docker Compose file for my Home Automation Server
+# Set up host by creating folders:
+#  /home/mosquito
+#  /home/zigbee2mqtt
+#  /home/HomeAssistant
+# Create file /home/zigbee2mqtt.configuration.yaml, based on the example at https://www.zigbee2mqtt.io/guide/getting-started/#installation
+#
+# Install docker-compose and docker.
+#
+# Start with:  sudo docker compose up -d
+#
+# This has all of our containers running as root - will have to work out
+# how to make it more secure!
+#
+services:
+  # mosquitto MQTT Broker
+  mqtt:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2.0
+    restart: unless-stopped
+    volumes:
+      - "/home/docker/mosquitto:/mosquitto"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    # FIXME:  Introduce authentication later!
+    command: "mosquitto -c /mosquitto-no-auth.conf"
+
+  # zigbee2mqtt to bridge between the zigbee wireless netowrk and MQTT
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    image: koenkk/zigbee2mqtt
+    volumes:
+      - /home/docker/zigbee2mqtt:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=Europe/London
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+
+  # Home Assistamt
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /home/docker/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
