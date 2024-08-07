@@ -40,6 +40,9 @@ services:
       - TZ=Europe/London
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
+    group_add:
+      - dialout
+    user: 1000:1000
 
   # Home Assistamt
   homeassistant:
