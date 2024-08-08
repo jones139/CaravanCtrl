@@ -42,7 +42,7 @@ services:
       - /dev/ttyUSB0:/dev/ttyUSB0
     group_add:
       - dialout
-    user: 1000:1000
+    user: 1000:988
 
   # Home Assistamt
   homeassistant:
