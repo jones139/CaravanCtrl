@@ -39,6 +39,8 @@ mkdir /home/docker/zigbee2mqtt
 mkdir /home/docker/homeassistant
 
 cp docker/zigbee2mqtt/configuration.yaml /home/docker/zigbee2mqtt
+chgrp -R docker /home/docker
+chmod -R g+w /home/docker
 
 docker compose up -d
 
