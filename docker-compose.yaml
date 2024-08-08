@@ -16,6 +16,7 @@ services:
   # mosquitto MQTT Broker
   mqtt:
     container_name: mosquitto
+    user: 1000:988
     image: eclipse-mosquitto:2.0
     restart: unless-stopped
     volumes:
