@@ -44,9 +44,10 @@ touch /home/docker/mosquitto/passwd
 chown -R 1000:988 /home/docker/mosquitto
 chmod 700 /home/docker/mosquitto/passwd
 
+# Start docker containers for mosquitto, zigbee2mqtt and homeassistant
 docker compose up -d
 
-# Create msqtt user and password
+# Create mqtt user and password
 # FIXME - we are using hard coded passwords in these configuration files. Not a big deal for this application 
 #         but do not do this for something important!!
 docker exec mosquitto mosquitto_passwd -b /mosquitto/passwd zigbee2mqtt zigbee2mqttpasswd
