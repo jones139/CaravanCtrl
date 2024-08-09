@@ -25,7 +25,8 @@ services:
       - "1883:1883"
       - "9001:9001"
     # FIXME:  Introduce authentication later!
-    command: "mosquitto -c /mosquitto-no-auth.conf"
+    # command: "mosquitto -c /mosquitto-no-auth.conf"
+    command: "mosquitto -c /mosquitto/mosquitto.conf"
 
   # zigbee2mqtt to bridge between the zigbee wireless netowrk and MQTT
   zigbee2mqtt:

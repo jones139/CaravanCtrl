@@ -1,0 +1,10 @@
+MQTT/Mosquitto Notes
+
+Restart mosquitto:
+   docker compose restart
+
+
+Add user or change password:
+    docker exec mosquitto mosquitto_passwd -b /etc/mosquitto/passwd osd osdpwd
+    
+
